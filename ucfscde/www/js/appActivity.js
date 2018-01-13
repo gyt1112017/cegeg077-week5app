@@ -20,9 +20,6 @@ var testMarkerPink = L.AwesomeMarkers.icon({
 
 	loadMap();
 	//showPointLineCircle();
-	document.addEventListener('DOMContentLoaded', function() {
-		getEarthquakes();
-	}, false);
 	
 		
 		
