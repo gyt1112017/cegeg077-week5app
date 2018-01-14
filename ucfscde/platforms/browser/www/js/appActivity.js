@@ -132,24 +132,21 @@ function loadearthquakelayer(earthquakedata) {
 
 var  xhr;  // define the global variable to process the AJAX request
 function callDivChange() {
+
 	 xhr = new XMLHttpRequest();
-	 xhr.open("GET", "https://developer.cege.ucl.ac.uk:31061/test.html", true);
+
+	 // use an HTTP request here as Edge doesn't work with HTTPS over express
+	 xhr.open('GET', 'http://developer.cege.ucl.ac.uk:30261/dir1/dir2/objectTest5.html');
 	 xhr.onreadystatechange = processDivChange;
-	 try {
-	    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	 }
-	 catch (e) {
-		// this only works in internet explorer
-	 }
-	 xhr.send();
+	xhr.send();
 }  
 function processDivChange() {
-if (xhr.readyState < 4)                         // while waiting response from server
-        document.getElementById('ajaxtest').innerHTML = "Loading...";
+if (xhr.readyState < 4)    {}                     // while waiting response from server
+        //document.getElementById('ajaxtest').innerHTML = "Loading...";
 
-    else if (xhr.readyState === 4) {               // 4 = Response from server has been completely loaded.
-        if (xhr.status == 200 && xhr.status < 300)  
-		// http status between 200 to 299 are all successful
+    else {
+		if (xhr.readyState === 4) {               // 4 = Response from server has been completely loaded.
             document.getElementById('ajaxtest').innerHTML = xhr.responseText;
     }
+}
 }
