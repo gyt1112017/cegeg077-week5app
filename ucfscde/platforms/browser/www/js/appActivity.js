@@ -128,6 +128,56 @@ function loadearthquakelayer(earthquakedata) {
     mymap.fitBounds(earthquakelayer.getBounds());
 }
 
+// ********************************** the code to load the formdata
+// call the server
+function showFormData() {
+   // set up the request
+   client = new XMLHttpRequest();
+   // make the request to the URL
+   client.open('GET','http://developer.cege.ucl.ac.uk:30261/getGeoJSON/formdata/geom');
+   // tell the request what method to run that will listen for the response
+   client.onreadystatechange = formDataResponse;  // note don't use earthquakeResponse() with brackets as that doesn't work
+   // activate the request
+   client.send();
+
+   }
+// receive the response
+function formDataResponse() {
+  // wait for a response - if readyState is not 4 then keep waiting 
+  if (client.readyState == 4) {
+    // get the data from the response
+    var formdata = client.responseText;
+    // call a function that does something with the data
+    loadFormDatalayer(formdata);
+  }
+}
+function loadFormDatalayer(formdata) {
+      // convert the text received from the server to JSON 
+      var formdatajson = JSON.parse(formdata );
+
+      // load the geoJSON layer
+      var formdatalayer = L.geoJson(formdatajson,
+        {
+            // use point to layer to create the points
+            pointToLayer: function (feature, latlng)
+            {
+              // look at the GeoJSON file - specifically at the properties - to see the earthquake magnitude and use a different marker depending on this value
+              // also include a pop-up that shows the place value of the earthquakes
+              if (feature.properties.mag > 1.75) {
+                 return L.marker(latlng, {icon:testMarkerRed}).bindPopup("<b>"+feature.properties.place +"</b>");
+              }
+              else {
+                // magnitude is 1.75 or less
+                return L.marker(latlng, {icon:testMarkerPink}).bindPopup("<b>"+feature.properties.place +"</b>");;
+              }
+            },
+        }).addTo(mymap); 
+    mymap.fitBounds(formdatalayer.getBounds());
+}
+
+
+
+
 
 //*************************
 // functions to change the DIV content using AJAX - week 5
