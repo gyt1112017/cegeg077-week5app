@@ -163,12 +163,12 @@ function loadFormDatalayer(formdata) {
             {
               // look at the GeoJSON file - specifically at the properties - to see the earthquake magnitude and use a different marker depending on this value
               // also include a pop-up that shows the place value of the earthquakes
-              if (feature.properties.mag > 1.75) {
-                 return L.marker(latlng, {icon:testMarkerRed}).bindPopup("<b>"+feature.properties.place +"</b>");
+              if (feature.properties.name == "claire") {
+                 return L.marker(latlng, {icon:testMarkerRed}).bindPopup("<b>"+feature.properties.name +"</b>" + " "+ feature.properties.modulelist);
               }
               else {
                 // magnitude is 1.75 or less
-                return L.marker(latlng, {icon:testMarkerPink}).bindPopup("<b>"+feature.properties.place +"</b>");;
+                return L.marker(latlng, {icon:testMarkerPink}).bindPopup("<b>"+feature.properties.place +"</b>"+ " "+ feature.properties.modulelist);
               }
             },
         }).addTo(mymap); 
